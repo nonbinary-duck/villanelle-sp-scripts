@@ -75,6 +75,9 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
  */
 public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 {
+    // Don't alter prices if the plugn is dissabled
+    if (g_randWepEnabled.FloatValue == 0) return Plugin_Continue;
+
     price = price * 2;
 
     PrintToChat(client, "The \x0C%s\x01 costs \x05%i", weapon, price);
