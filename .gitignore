@@ -1,0 +1,10 @@
+**/**
+
+!.vscode
+!.vscode/**
+!compile.sh
+!damagelog.sp
+!tyler-had-an-idea.sp
+!randweapon.sp
+!include/villanelle.inc
+!.gitignore
