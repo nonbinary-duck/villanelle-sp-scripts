@@ -36,10 +36,11 @@ public void Event_PlayerHurt(Event event, const char[] name, bool dontBroadcast)
 
 	// If it's world damage, ignore it
 	// If the damage log is at a maximum, just skip
-	if (!IsClientInGame(attacker) || dmgPointer[attacker] >= 256)
+	if (attacker == 0 || dmgPointer[attacker] >= 256)
 	{
 		return;
 	}
+	else if (!IsClientInGame(attacker)) return;
 	
 	// Get details about the damage
 	int damage = event.GetInt("dmg_health");
