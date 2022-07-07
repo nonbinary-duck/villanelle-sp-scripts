@@ -13,3 +13,6 @@
 # Includes
 !include
 !include/villanelle.inc
+!include/v_ata_tools_cpy.inc
+!include/randweapons_tables.inc
+!include/randweapons.inc
