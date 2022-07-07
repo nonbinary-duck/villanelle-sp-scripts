@@ -14,22 +14,61 @@ public Plugin myinfo =
     url = "http://www.sourcemod.net/"
 };
 
+// ConVars
+ConVar g_randWepEnabled;
 
 public OnPluginStart()
 {
     // Seed the rng
     SetRandomSeed(RoundToFloor(GetEngineTime()));
 
+    // Setup conVars
+    g_randWepEnabled = CreateConVar("randwep",
+            "0.0",
+            "Sets the random weapons plugin to be enabled/dissabled",
+            FCVAR_NOTIFY | FCVAR_REPLICATED,
+            true,
+            0.0,
+            true,
+            1.0
+    );
+
+    // RegConsoleCmd("randwep", Command_RandWep);
+
+    // Save a defaut config file
+    AutoExecConfig(true, "randweapons");
+    
     // Info
     PrintToChatAll("Random weapon plugin loaded");
 
-
     // Hook onto the round starting
-    HookEvent("round_start", Event_RoundStart, EventHookMode_Pre);
+    HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
 }
+
+// // Config stuff
+// public Action Command_RandWep(int client, int args)
+// {
+// 	if (!client) return Plugin_Handled;
+
+//     if (GetUserAdmin(client) == INVALID_ADMIN_ID) return Plugin_Handled;
+//     // if (GetUserAdmin(client) == INVALID_ADMIN_ID) return Plugin_Handled;
+// }
 
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
+    // Check if the plugin is enabled
+    if (g_randWepEnabled.FloatValue == 0) return;
+
+    // Get the round number and get the max number of rounds
+    int roundNumber = GetTeamScore(2) + GetTeamScore(3);
+    int maxrounds = FindConVar("mp_maxrounds").IntValue;
+    int halfTime = maxrounds / 2;
+
+    // Check if this is a pistol round
+    bool isPistolRound = roundNumber % halfTime == 0;
+    // If we're in overtime, don't enable pistol round
+    isPistolRound = (roundNumber + 1 >= maxrounds)? false : isPistolRound;
+    
     // Fancy print to all that random weapons will be assigned
     PrintToChatAll("=== \x02R\x09a\x05n\x04d\x03o\x02m\x09i\x05s\x04\x03i\x02n\x09g\x01 \x05w\x04e\x03a\x02p\x09o\x05n\x04s\x03!\x01 ===");
     
@@ -52,6 +91,10 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
         
         // Get which weapon to give the player
         int result = GetRandomInt(0, 31);
+
+        // Re-Roll for just pistols if it's a pistol round
+        if (isPistolRound) result = GetRandomInt(0, 6);
+        if (isPistolRound) PrintToChatAll("Pistol round");
 
         // If it's the first round of a half, choose only pistols
         // if (getRound)
