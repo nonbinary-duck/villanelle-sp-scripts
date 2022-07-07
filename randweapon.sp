@@ -31,27 +31,33 @@ public OnPluginStart()
 public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     // Fancy print to all that random weapons will be assigned
-    PrintToChatAll("=== Randomising \x02w\x09e\x05a\x04p\x03o\x02n\x09s\x05!\x01 ===");
+    PrintToChatAll("=== \x02R\x09a\x05n\x04d\x03o\x02m\x09i\x05s\x04\x03i\x02n\x09g\x01 \x05w\x04e\x03a\x02p\x09o\x05n\x04s\x03!\x01 ===");
     
+    // player 0 is "World"
     for(int i = 1; i <= MAXPLAYERS; i++)
     {
         // Check if this slot is occupied
         if (!IsClientInGame(i)) continue;
 
-        for(int j = 0; j <= 4; j++)
-        {
-            RemoveWeaponFromSlot(i, j);
-        }
+        // Remove the player's weapons
+        RemovePrimaryAndSecondaryWeapons(i);
 
-        // The weapon to give the player
+        // Info to store about the weapon to give the player
         char weapon[30];
         char connector[30];
         char weaponName[30];
-        // The "quality" of the weapon, red (x02), yellow (x09), light green (x05), green (x04) or purple (x03)
+        // The eventual "quality" of the weapon, red (x02), yellow (x09), light green (x05), green (x04) or purple (x03)
         // 0 (red) - 4 (purple)
         int tier = 0;
+        
+        // Get which weapon to give the player
+        int result = GetRandomInt(0, 31);
 
-        switch(GetRandomInt(0, 31))
+        // If it's the first round of a half, choose only pistols
+        // if (getRound)
+
+        // Sort out the variables
+        switch(result)
         {
             case 0:
             {
@@ -86,7 +92,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
                 weapon = "weapon_cz75a";
                 connector = "a";
                 weaponName = "cz75";
-                tier = 2;
+                tier = 1;
             }
             case 5:
             {
@@ -114,7 +120,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
             {
                 weapon = "weapon_sawedoff";
                 connector = "a";
-                weaponName = "Sawedoff, yikes";
+                weaponName = "Sawedoff. Yikes";
                 tier = 0;
             }
             case 9:
@@ -221,7 +227,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
             {
                 weapon = "weapon_m4a1_silencer";
                 connector = "a";
-                weaponName = "Silenced M4A1";
+                weaponName = "Suppressed M4A1";
                 tier = 4;
             }
             case 24:
@@ -273,6 +279,7 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
                 weaponName = "Zeus";
                 tier = 0;
             }
+            // Pretty much the same as case 31: though gives a fallback
             default:
             {
                 weapon = "chicken";

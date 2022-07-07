@@ -1,10 +1,15 @@
 **/**
 
+# Project files
 !.vscode
 !.vscode/**
 !compile.sh
-!damagelog.sp
-!tyler-had-an-idea.sp
-!randweapon.sp
-!include/villanelle.inc
 !.gitignore
+
+# Scripts
+!damagelog.sp
+!randweapon.sp
+
+# Includes
+!include
+!include/villanelle.inc
