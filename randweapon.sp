@@ -1,7 +1,8 @@
-#include <sourcemod>
-#include <sdktools>
 #include <cstrike>
+#include <sdktools>
+#include <sdktools_functions>
 #include <randweapons>
+#include <sourcemod>
 
 
 public Plugin myinfo =
@@ -32,7 +33,8 @@ public OnPluginStart()
             1.0
     );
 
-    // RegConsoleCmd("randwep", Command_RandWep);
+    // Give a command to manually dish out weapons
+    RegAdminCmd("randwepons_manual", Command_Manual, ADMFLAG_CHEATS, "Manually trigger the weapon dishing-out, ignoring if the plugin is \"enabled\"");
 
     // Save a defaut config file
     AutoExecConfig(true, "randweapons");
@@ -42,6 +44,19 @@ public OnPluginStart()
 
     // Hook onto the round starting
     HookEvent("round_start", Event_RoundStart, EventHookMode_PostNoCopy);
+
+    // Hook onto the weapon price thingi
+    // AddToForward(CS_OnGetWeaponPrice, handle)
+}
+
+/**
+ * Manually trigger the weapon dishing-out, ignoring if the plugin is "enabled"
+ */
+public Action Command_Manual(int client, int args)
+{
+    DishOutWeapons();
+
+    return Plugin_Handled;
 }
 
 /**
@@ -52,29 +67,17 @@ public void Event_RoundStart(Event event, const char[] name, bool dontBroadcast)
     // Check if the plugin is enabled
     if (g_randWepEnabled.FloatValue == 0) return;
 
-    // Check if we're in a pistol round
-    bool isPistolRound = IsPistolRound();
-    
-    // Fancy print to all that random weapons will be assigned
-    PrintToChatAll("=== \x02R\x09a\x05n\x04d\x03o\x02m\x09i\x05s\x04\x03i\x02n\x09g\x01 \x05w\x04e\x03a\x02p\x09o\x05n\x04s\x03!\x01 ===");
-    
-    // player 0 is "World"
-    for(int i = 1; i < MAXPLAYERS; i++)
-    {
-        // Check if this slot is occupied
-        if (!IsClientInGame(i)) continue;
-
-        // Give them a random weapon and print the details of it
-        SelectAndGiveRandomWeapon(i, isPistolRound);
-    }
+    DishOutWeapons();
 }
 
 /**
  * Double weapon prices
  */
-Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
+public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 {
     price = price * 2;
+
+    PrintToChat(client, "The \x0C%s\x01 costs \x05%i", weapon, price);
 
     return Plugin_Changed;
 }

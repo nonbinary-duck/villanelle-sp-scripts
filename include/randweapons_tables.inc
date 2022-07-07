@@ -1,10 +1,10 @@
 #include <string>
 
 /**
- * Gets the details of a weapon from a number range 0-34
+ * Gets the details of a weapon from a number range 0-33
  *     0-30 to avoid special items, 0-29 to avoid zeus, 0-6 for pistols, 7-10 for shotguns, 11-12 for lmg, 13-18 for SMG, 19-29 for rifles
  */
-public void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] weaponNameSet, int &tier, int strLen)
+void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] weaponNameSet, int &tier, int strLen)
 {
     char weapon[64];
     char connector[64];
@@ -248,14 +248,15 @@ public void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, cha
             weaponName = "C4";
             tier = 0;
         }
-        case 33:
-        {
-            weapon = "weapon_shield";
-            connector = "a";
-            weaponName = "shield";
-            tier = 0;
-        }
-        // Pretty much the same as case 34: though gives a fallback
+        // For some reason I can't pick up a shield
+        // case 33:
+        // {
+        //     weapon = "weapon_shield";
+        //     connector = "a";
+        //     weaponName = "shield";
+        //     tier = 0;
+        // }
+        // Pretty much the same as case 33: though gives a fallback
         default:
         {
             weapon = "chicken";
@@ -273,7 +274,7 @@ public void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, cha
 /**
  * Gets the chat colour code which represents a tier
  */
-public void GetTierColour(int tier, char[] tierColourSet, int strLen)
+void GetTierColour(int tier, char[] tierColourSet, int strLen)
 {
     char tierColour[8];
     
