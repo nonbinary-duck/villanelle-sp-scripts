@@ -4,11 +4,14 @@
  * Gets the details of a weapon from a number range 0-33
  *     0-30 to avoid special items, 0-29 to avoid zeus, 0-6 for pistols, 7-10 for shotguns, 11-12 for lmg, 13-18 for SMG, 19-29 for rifles
  */
-void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] weaponNameSet, int &tier, int strLen)
+void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] weaponNameSet, char[] puncuationSet, int &tier, int strLen)
 {
     char weapon[64];
     char connector[64];
     char weaponName[64];
+    char puncuation[64];
+
+    puncuation = "!";
     
     switch(wep)
     {
@@ -232,6 +235,7 @@ void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] wea
             weapon = "weapon_taser";
             connector = "a";
             weaponName = "Zeus";
+            puncuation = "...";
             tier = 0;
         }
         case 31:
@@ -261,7 +265,7 @@ void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] wea
         {
             weapon = "chicken";
             connector = "a";
-            weaponName = "heckin chicken lol";
+            weaponName = "heckin' chicken lol";
             tier = 0;
         }
     }
@@ -269,6 +273,7 @@ void ChooseRandWeapon(int wep, char[] weaponSet, char[] connectorSet, char[] wea
     strcopy(weaponSet, strLen, weapon);
     strcopy(connectorSet, strLen, connector);
     strcopy(weaponNameSet, strLen, weaponName);
+    strcopy(puncuationSet, strLen, puncuation);
 }
 
 /**

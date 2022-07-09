@@ -1,3 +1,6 @@
+#pragma tabsize 4
+#pragma semicolon 1
+
 #include <cstrike>
 #include <sdktools>
 #include <sdktools_functions>
@@ -10,7 +13,7 @@ public Plugin myinfo =
     name = "Rand weapons",
     author = "Villanelle",
     description = "idk",
-    version = SOURCEMOD_VERSION,
+    version = "1.0.1",
     url = "http://www.sourcemod.net/"
 };
 
@@ -36,7 +39,7 @@ public OnPluginStart()
     // Give a command to manually dish out weapons
     RegAdminCmd("randwep_manual", Command_Manual, ADMFLAG_CHEATS, "Manually trigger the weapon dishing-out, ignoring if the plugin is \"enabled\"");
 
-    // Save a defaut config file
+    // Save a defaut config file and execute on pluginLoad
     AutoExecConfig(true, "randweapons");
     
     // Info
@@ -79,6 +82,10 @@ public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
     if (g_randWepEnabled.FloatValue == 0) return Plugin_Continue;
 
     price = price * 2;
+
+    // Allow some custom prices
+    if (strcmp(weapon, "awp") == 0) price = 8000;
+    else if (strcmp(weapon, "m249") == 0) price = 8000;
 
     PrintToChat(client, "The \x0C%s\x01 costs \x05%i$", weapon, price);
 

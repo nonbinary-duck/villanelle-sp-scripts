@@ -8,6 +8,7 @@ void SelectAndGiveRandomWeapon(int client, bool isPistolRound, char[] whatToSay 
     char weapon[30];
     char connector[30];
     char weaponName[30];
+    char puncuation[30];
     // The eventual "quality" of the weapon, red (x02), yellow (x09), light green (x05), green (x04) or purple (x03)
     // 0 (red) - 4 (purple)
     int tier = 0;
@@ -25,7 +26,7 @@ void SelectAndGiveRandomWeapon(int client, bool isPistolRound, char[] whatToSay 
     if (isPistolRound) result = GetRandomInt(0, 6);
 
     // Sort out the variables
-    ChooseRandWeapon(result, weapon, connector, weaponName, tier, 30);
+    ChooseRandWeapon(result, weapon, connector, weaponName, puncuation, tier, 30);
 
     // Get what colour to use in the chat
     char tierColour[3];
@@ -34,7 +35,7 @@ void SelectAndGiveRandomWeapon(int client, bool isPistolRound, char[] whatToSay 
     // Give them the "gun"
     GivePlayerItem(client, weapon);
 
-    PrintToChat(client, "%s %s %s%s\x01!", whatToSay, connector, tierColour, weaponName);
+    PrintToChat(client, "%s %s %s%s\x01%s", whatToSay, connector, tierColour, weaponName, puncuation);
 }
 
 /**

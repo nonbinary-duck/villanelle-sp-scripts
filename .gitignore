@@ -9,6 +9,8 @@
 # Scripts
 !damagelog.sp
 !randweapon.sp
+!warmupmoney.sp
+!sptesting.sp
 
 # Includes
 !include
