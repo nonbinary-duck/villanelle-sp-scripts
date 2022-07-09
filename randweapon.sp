@@ -34,7 +34,7 @@ public OnPluginStart()
     );
 
     // Give a command to manually dish out weapons
-    RegAdminCmd("randwepons_manual", Command_Manual, ADMFLAG_CHEATS, "Manually trigger the weapon dishing-out, ignoring if the plugin is \"enabled\"");
+    RegAdminCmd("randwep_manual", Command_Manual, ADMFLAG_CHEATS, "Manually trigger the weapon dishing-out, ignoring if the plugin is \"enabled\"");
 
     // Save a defaut config file
     AutoExecConfig(true, "randweapons");
@@ -80,7 +80,7 @@ public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 
     price = price * 2;
 
-    PrintToChat(client, "The \x0C%s\x01 costs \x05%i", weapon, price);
+    PrintToChat(client, "The \x0C%s\x01 costs \x05%i$", weapon, price);
 
     return Plugin_Changed;
 }
