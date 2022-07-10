@@ -1,40 +1,58 @@
 #pragma tabsize 4
 #pragma semicolon 1
 
-#include <cstrike>
-#include <sdktools>
-#include <sdktools_trace>
-#include <sourcemod>
-#include <villanelle>
+#include <entity>
+#include <console>
+#include <convars>
+#include <sdktools_gamerules>
 
-// Offsets
-int g_Offset_Money = -1;
+/**
+ * Static Definitions
+ */
+
+#define PLUGIN_NAME "SP Testing"
+#define PLUGIN_VER  "0.0.0"
 
 public Plugin myinfo =
 {
-    name = "SP Testing",
+    name = PLUGIN_NAME,
     author = "Villanelle",
-    description = "idk",
-    version = "0.0.0",
+    description = "My testing plugin",
+    version = PLUGIN_VER,
     url = "http://www.sourcemod.net/"
 };
 
+/**
+ * Globals
+ */
+
+// Offsets
+int g_Offset_AttributeManager;
+int g_Offset_BurstFireMode;
+
+/**
+ * Everything else
+ */
+
 public OnPluginStart()
 {
-    PrintToChatAll("\x03SPTesting Plugin Loading");
+    // Find offsets
+    g_Offset_AttributeManager = FindSendPropInfo("CWeaponCSBaseGun", "m_AttributeManager");
+    g_Offset_BurstFireMode = FindSendPropInfo("CWeaponCSBaseGun", "m_bBurstMode");
 
-    // Sort out offsets
-    g_Offset_Money = FindSendPropInfo("CCSPlayer", "m_iAccount");
-    PrintToChatAll("Offset: %i", g_Offset_Money);
-    
-    
-    // Hooks
+    PrintToChatAll("%i", g_Offset_AttributeManager);
+    PrintToChatAll("%i", g_Offset_BurstFireMode);
+
+    // Hook onto events
     HookEvent("weapon_fire", Event_WeaponFire, EventHookMode_Pre);
+
+    // Print we've loaded
+    PrintToConsoleAll("%s %s loaded successfully", PLUGIN_NAME, PLUGIN_VER);
 }
 
 public void Event_WeaponFire(Event event, const char[] name, bool dontBroadcast)
 {
-    int prediction = GameRules_GetProp("m_nTournamentPredictionsPct");
-
-    PrintToChatAll("Precition: %i", prediction);
+    event.
+    
+    GetEntityAddress();
 }

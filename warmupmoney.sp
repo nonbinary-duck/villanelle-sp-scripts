@@ -16,9 +16,9 @@
 public Plugin myinfo =
 {
     name = PLUGIN_NAME,
-    author = PLUGIN_VER,
+    author = "Villanelle",
     description = "Gives money during warmpup",
-    version = "1.0.0",
+    version = PLUGIN_VER,
     url = "http://www.sourcemod.net/"
 };
 
