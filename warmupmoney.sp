@@ -41,6 +41,7 @@ public OnPluginStart()
     // Find offsets
     g_Offset_Money = FindSendPropInfo("CCSPlayer", "m_iAccount");
 
+    // ConVars
     g_ConVar_MaxMoney = FindConVar("mp_maxmoney");
 
     // Hook onto events
