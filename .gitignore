@@ -22,3 +22,6 @@
 # Dumps
 !dumps
 !dumps/**
+
+# Misc
+!notes.md

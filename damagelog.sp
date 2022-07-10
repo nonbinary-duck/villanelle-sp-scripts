@@ -9,7 +9,7 @@ public Plugin myinfo =
     name = "Damage Log",
     author = "Villanelle",
     description = "Provides a detailed log of damage dealt at the end of a round.",
-    version = "1.0",
+    version = "1.0.0",
     url = "http://www.sourcemod.net/"
 };
 

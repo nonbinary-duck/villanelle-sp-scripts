@@ -15,7 +15,7 @@ public Plugin myinfo =
     name = "SP Testing",
     author = "Villanelle",
     description = "idk",
-    version = "0.0",
+    version = "0.0.0",
     url = "http://www.sourcemod.net/"
 };
 
@@ -32,14 +32,9 @@ public OnPluginStart()
     HookEvent("weapon_fire", Event_WeaponFire, EventHookMode_Pre);
 }
 
-public Action Event_WeaponFire(Event event, const char[] name, bool dontBroadcast)
+public void Event_WeaponFire(Event event, const char[] name, bool dontBroadcast)
 {
-    // If we're in the warmup, give users money every time they shoot
-    if (GameRules_GetProp("m_bWarmupPeriod") == 0) return Plugin_Continue;
-    int ent = GetClientOfUserId(event.GetInt("userid"));
-    
-    int money = GetEntData(ent, g_Offset_Money);
-    SetEntData(ent, g_Offset_Money, money + 100);
+    int prediction = GameRules_GetProp("m_nTournamentPredictionsPct");
 
-    return Plugin_Continue;
+    PrintToChatAll("Precition: %i", prediction);
 }

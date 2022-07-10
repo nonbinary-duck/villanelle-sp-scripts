@@ -81,6 +81,7 @@ public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
     // Don't alter prices if the plugn is dissabled
     if (g_randWepEnabled.FloatValue == 0) return Plugin_Continue;
 
+    // Make the price 2x of what it should be
     price = price * 2;
 
     // Allow some custom prices
