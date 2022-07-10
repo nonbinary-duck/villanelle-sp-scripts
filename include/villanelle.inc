@@ -1,6 +1,7 @@
 #include <v_ata_tools_cpy>
 #include <convars>
 #include <cstrike>
+#include <string>
 
 /**
  * Removes a client's primary and secondary weapon and makes them equip their knife
