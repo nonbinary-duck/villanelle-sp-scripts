@@ -2,6 +2,7 @@
 #pragma semicolon 1
 
 #include <entity>
+#include <events>
 #include <console>
 #include <convars>
 #include <sdktools_gamerules>
