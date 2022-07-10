@@ -11,6 +11,9 @@ public void RemovePrimaryAndSecondaryWeapons(client)
 	RemoveWeaponFromSlot(client, CS_SLOT_SECONDARY);
 }
 
+/**
+ * Checks if its a pistol round (excluding overtime)
+ */
 public bool IsPistolRound()
 {
 	// Get the round number and get the max number of rounds

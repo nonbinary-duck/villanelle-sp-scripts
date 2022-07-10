@@ -7,6 +7,10 @@
 #include <sourcemod>
 
 
+// Offsets
+int g_Offset_Money = -1;
+
+
 public Plugin myinfo =
 {
     name = "Warmup Money",
@@ -16,3 +20,7 @@ public Plugin myinfo =
     url = "http://www.sourcemod.net/"
 };
 
+public OnPluginStart()
+{
+    getInfo
+}

@@ -5,7 +5,10 @@
 #include <sdktools>
 #include <sdktools_trace>
 #include <sourcemod>
+#include <villanelle>
 
+// Offsets
+int g_Offset_Money = -1;
 
 public Plugin myinfo =
 {
@@ -19,21 +22,24 @@ public Plugin myinfo =
 public OnPluginStart()
 {
     PrintToChatAll("\x03SPTesting Plugin Loading");
+
+    // Sort out offsets
+    g_Offset_Money = FindSendPropInfo("CCSPlayer", "m_iAccount");
+    PrintToChatAll("Offset: %i", g_Offset_Money);
+    
     
     // Hooks
-    // HookEvent("weapon_fire", Event_WeaponFire, EventHookMode_Pre);
+    HookEvent("weapon_fire", Event_WeaponFire, EventHookMode_Pre);
 }
 
 public Action Event_WeaponFire(Event event, const char[] name, bool dontBroadcast)
 {
-    // PrintToConsoleAll(name);
+    // If we're in the warmup, give users money every time they shoot
+    if (GameRules_GetProp("m_bWarmupPeriod") == 0) return Plugin_Continue;
+    int ent = GetClientOfUserId(event.GetInt("userid"));
     
-    // TR_TraceRay()
-
-    char info[64];
-    GetClientInfo(GetClientOfUserId(event.GetInt("userid")), "targetname", info, 64);
-
-    PrintToChatAll("Info: %s", info);
+    int money = GetEntData(ent, g_Offset_Money);
+    SetEntData(ent, g_Offset_Money, money + 100);
 
     return Plugin_Continue;
 }
